@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./app
+    command: migrate runserver
+    env_file:
+      - .env
+    volumes:
+      - ./app/server:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+
+  database:
+    image: postgres:13
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
