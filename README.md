@@ -4,7 +4,7 @@ Project with simple API for list, get, create, change and delete Post.
 Implemented with Python Django and Django Rest Framework.
 As data storage used PostgreSQL database.
 
-_Version: 0.0.1_
+_Version: 1.0.0_
 
 ## Overview
 
