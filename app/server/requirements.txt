@@ -18,10 +18,14 @@ django-baton==2.7.1
     # via -r requirements.in
 django-environ==0.10.0
     # via -r requirements.in
+django-prometheus==2.2.0
+    # via -r requirements.in
 djangorestframework==3.14.0
     # via -r requirements.in
 idna==3.4
     # via requests
+prometheus-client==0.17.1
+    # via django-prometheus
 psycopg2-binary==2.9.1
     # via -r requirements.in
 pytz==2023.3

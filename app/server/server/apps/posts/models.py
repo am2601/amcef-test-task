@@ -8,3 +8,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=256)
+    country = models.CharField(max_length=60)
+    publication_counter = models.IntegerField()
+    rating = models.FloatField(null=True, default=1)

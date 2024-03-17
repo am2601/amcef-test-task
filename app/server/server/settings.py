@@ -9,13 +9,13 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.205']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "baton",
+    # "baton",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -24,10 +24,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "server.apps.posts",
     "rest_framework",
-    "baton.autodiscover"
+    "django_prometheus",
+    # "baton.autodiscover"
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -35,6 +37,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 ROOT_URLCONF = "server.urls"
@@ -112,9 +115,9 @@ BATON = {
     'SITE_HEADER': 'Posts',
     'SITE_TITLE': 'Posts',
     'INDEX_TITLE': 'Administration',
-    'SUPPORT_HREF': f"{env('GH_URL')}/django-test",
-    'COPYRIGHT': f'copyright © 2023 <a href="{env("LINKEDIN_URL")}">{env("AUTHOR_NAME")}</a>',
-    'POWERED_BY': f'<a href="{env("GH_URL")}">{env("AUTHOR_NAME")}</a>',
+    'SUPPORT_HRE': f"{env('GH_URL')}/django-test",
+    'COPYRIGHT': 'copyright © 2023 <a href="{env("LINKEDIN_URL")}">{env("AUTHOR_NAME")}</a>',
+    'POWERED_BY': '<a href="{env("GH_URL")}">{env("AUTHOR_NAME")}</a>',
     "CONFIRM_UNSAVED_CHANGES": True,
     "SHOW_MULTIPART_UPLOADING": True,
     "ENABLE_IMAGES_PREVIEW": True,

@@ -21,7 +21,7 @@ class PostAdmin(admin.ModelAdmin):
             return self.readonly_fields
 
     def save_model(self, request, obj, form, change):
-        response = requests.get(f'{env("EXTERNAL_API_URL")}/users/{obj.userId}')
+        response = requests.get('{env("EXTERNAL_API_URL")}/users/{obj.userId}')
         if response.status_code == 200:
             return super().save_model(request, obj, form, change)
-        raise ValidationError(f'User with userId {obj.userId} not found')
+        raise ValidationError('User with userId {obj.userId} not found')

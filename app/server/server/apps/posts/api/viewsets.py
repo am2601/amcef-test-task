@@ -13,46 +13,42 @@ env = environ.Env()
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    Queryset = Post.objects.all()
+    serializerClass = PostSerializer
+    serializerClass = PostSerializer
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        QUERYSET = super().get_queryset()
         userId = self.request.query_params.get('userId')
         if userId:
-            queryset = queryset.filter(userId=userId)
-        return queryset
+            QUERYSET = QUERYSET.filter(userId=userId)
+        return QUERYSET
 
     def create(self, request, *args, **kwargs):
         userId = request.data.get('userId')
         logger.debug(userId)
         try:
-            response = requests.get(f'{env("EXTERNAL_API_URL")}/users/{userId}')
+            response = requests.get('{env("EXTERNAL_API_URL")}/users/{userId}')
             if response.status_code == 200:
                 return super().create(request, args, kwargs)
         except (ConnectTimeout, ConnectionError):  # external API not available
             pass
         return Response(status=404, data={
-                'message': f'user with userId {userId} not found'
+                'message': 'user with userId {userId} not found'
             })
 
     def retrieve(self, request, *args, **kwargs):
-        try:
-            self.get_object()
-        except Http404:
-            id = kwargs.get('pk')
-            logger.debug(id)
-            if id:
-                try:
-                    response = requests.get(
-                            f'{env("EXTERNAL_API_URL")}/posts/{id}'
-                        )
-                    if response.status_code == 200:
-                        logger.debug('found in external API')
-                        if response.json():
-                            return Response(response.json())
-                except (ConnectionError, ConnectTimeout):  # external API not available
-                    pass
+        self.get_object()
+        id = kwargs.get('pk')
+        logger.debug(id)
+        if id:
+            response = requests.get(
+                    '{env("EXTERNAL_API_URL")}/posts/{id}'
+                )
+            if response.status_code == 200:
+                logger.debug('found in external API')
+                if response.json():
+                    return Response(response.json())
         return super().retrieve(request, args, kwargs)
 
     def update(self, request, *args, **kwargs):
